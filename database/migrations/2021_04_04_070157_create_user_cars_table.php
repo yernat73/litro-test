@@ -19,11 +19,14 @@ class CreateUserCarsTable extends Migration
             $table->string('number');
             $table->string('vin')->nullable();
 
+            $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('car_brand_id')->unsigned();
             $table->bigInteger('car_mode_id')->unsigned();
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('car_brand_id')->references('id')->on('car_brands')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('car_mode_id')->references('id')->on('car_modes')->onDelete('cascade')->onUpdate('cascade');
+
 
             $table->timestamps();
         });

@@ -1,4 +1,4 @@
-import { TModal, TInput, TDatepicker } from "vue-tailwind/dist/components"
+import { TModal, TInput, TDatepicker, TAlert } from "vue-tailwind/dist/components"
 import Russian from "vue-tailwind/dist/l10n/ru"
 export default {
     't-modal': {
@@ -47,7 +47,7 @@ export default {
                 success: 'border-green-300 bg-green-50 placeholder-gray-500 text-green-900'
             }
         }
-  },
+    },
     't-datepicker': {
             component: TDatepicker,
             props: {
@@ -135,5 +135,33 @@ export default {
                     }
                 }
             }
+    },
+    't-alert': {
+        component: TAlert,
+        props: {
+            fixedClasses: {
+                wrapper: 'relative flex items-center p-4 border-l-4  rounded shadow-lg font-medium bg-opacity-10',
+                body: 'flex-grow',
+                close: 'clickable hover:bg-opacity-10 absolute relative flex items-center justify-center ml-4 flex-shrink-0 w-6 h-6 transition duration-100 ease-in-out rounded  focus:ring-1 focus:ring-white focus:ring-opactiy-50 focus:outline-none focus:ring-opacity-50',
+                closeIcon: 'fill-current h-4 w-4'
+            },
+            classes: {
+                wrapper: 'bg-blue-50 border-blue-500',
+                body: 'text-blue-700',
+                close: 'text-blue-500 hover:bg-blue-200'
+            },
+            variants: {
+                danger: {
+                    wrapper: 'bg-red-50 border-red-500',
+                    body: 'text-red-700',
+                    close: 'text-red-500 hover:bg-red-200'
+                },
+                success: {
+                    wrapper: 'bg-green-50 border-green-500',
+                    body: 'text-green-700',
+                    close: 'text-green-500 hover:bg-green-200'
+                }
+            }
+        }
     }
 }

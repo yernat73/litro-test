@@ -2,6 +2,9 @@
   <t-modal
         name="car"
         header="Добавить авто">
+        <t-alert class="mb-4" variant="success" :show="alertIsActive">
+            Авто усшешно добавлено 
+        </t-alert>
         <label class="flex flex-col mb-2">
             <span class="mb-2 text-gray-700 font-medium">Марка автомобиля</span>
             <v-select :options="carBrands" label="name" placeholder="Выберите марку" v-model="formData.brand"></v-select>
@@ -62,6 +65,9 @@ export default {
         },
         cars(){
             return this.$store.getters.cars
+        },
+        alertIsActive(){
+            return this.$store.getters.carValidationSuccess
         }
     },
     watch: {

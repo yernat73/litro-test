@@ -3,8 +3,10 @@ export default {
     carValidationErrors: [],
     carBrands: [],
     carBrandModes: [],
+    carValidationSuccess: false,
 
 
     users: [],
-    userRegistrationErrors: []
+    userRegistrationErrors: [],
+    userRegistrationSuccess: false,
 }

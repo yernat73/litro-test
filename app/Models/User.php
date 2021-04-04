@@ -17,8 +17,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'surname',
         'name',
         'email',
+        'birth_date',
+        'iid',
+        'city',
         'password',
     ];
 
@@ -40,4 +44,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    public function cars(){
+        return $this->hasMany(UserCar::class);
+    }
 }
