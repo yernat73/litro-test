@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+
+    .clickable {
+        @apply transform duration-150;
+    }
+
+    .clickable:active {
+        @apply scale-95;
+    }
+
+    .input{
+        @apply block w-full px-4 py-3 transition duration-150 ease-in-out border rounded-lg hover:bg-opacity-50 font-medium text-lg placeholder-gray-500 bg-violet-900 border-violet-1000 focus:border-white focus:border-opacity-50;
+    }
+    .input:disabled{
+        @apply opacity-50 cursor-not-allowed;
+    }
+}
+
+*{
+    outline: none!important;
+}

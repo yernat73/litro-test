@@ -1,0 +1,64 @@
+
+
+@import "vueSelectVariables";
+
+
+@import "vue-select/src/scss/vue-select.scss";
+
+
+.v-select{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 500;
+    &.vs--open{
+        .vs__dropdown-toggle,
+        .vs__dropdown-menu {
+            border-color: rgba(white, 0.5);
+        }
+        .vs__open-indicator {
+            transform: rotate(0deg);
+        }
+    }
+    .vs__dropdown-toggle{
+        background: #111320;
+        padding: 0;
+        color: white;
+        padding: 0.75rem 1rem;
+        .vs__selected-options{
+            padding: 0;
+        }
+        .vs__selected{
+            color: white;
+            padding: 0;
+            margin: 0;
+            border: none;
+            border-radius: none;
+        }
+        .vs__search{
+            margin: 0;
+            border: none;
+            padding: 0;
+            &::placeholder{
+                color: rgba(white, 0.5);
+            }
+        }
+        .vs__actions{
+            padding: 0;
+        }
+    }
+
+    .vs__dropdown-menu{
+        .vs__dropdown-option{
+             padding: 0.25rem 1rem;
+             color: rgba(white, 0.5);
+             &.vs__dropdown-option--highlight{
+                 background: rgba(white, 0.05);
+                 color: white;
+             }
+        }
+    }
+    .vs__open-indicator{
+        transition: all 0.15s ease;
+        transform: rotate(-90deg);
+    }
+}

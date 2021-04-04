@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CarBrand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::get('/car/brands', function (){
+    return CarBrand::all();
+});
+
+Route::get('/car/modes/{carBrand}', function (CarBrand $carBrand) {
+    return $carBrand->modes()->orderBy('name')->get();
 });
