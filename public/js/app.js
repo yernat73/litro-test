@@ -1921,12 +1921,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       formData: {
         brand: null,
         mode: null,
+        year: null,
         number: null,
         vin: null
       }
@@ -1942,6 +1948,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.$store.getters.carBrandModes;
+    },
+    errors: function errors() {
+      return this.$store.getters.carValidationErrors;
+    },
+    cars: function cars() {
+      return this.$store.getters.cars;
     }
   },
   watch: {
@@ -1949,10 +1961,29 @@ __webpack_require__.r(__webpack_exports__);
       if (brand) {
         this.$store.dispatch('getCarBrandModes', brand.id);
       }
+    },
+    cars: function cars() {
+      this.formData = {
+        brand: null,
+        mode: null,
+        year: null,
+        number: null,
+        vin: null
+      };
     }
   },
-  mounted: function mounted() {},
-  methods: {}
+  methods: {
+    save: function save() {
+      this.$store.dispatch('validateCar', this.formData);
+    },
+    errorMessage: function errorMessage(attr) {
+      if (!this.errors[attr]) {
+        return null;
+      }
+
+      return this.errors[attr][0];
+    }
+  }
 });
 
 /***/ }),
@@ -2381,6 +2412,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       }, _callee3);
     }))();
+  },
+  validateCar: function validateCar(_ref4, formData) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee4() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref4.commit;
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/car/validate', formData).then(function (response) {
+                commit("PUSH_CAR", formData);
+              })["catch"](function (error) {
+                commit("SET_CAR_VALIDATION_ERRORS", error.response.data.errors);
+              });
+
+            case 3:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4);
+    }))();
+  },
+  registerUser: function registerUser(_ref5, formData) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee5() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              commit = _ref5.commit;
+              _context5.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/user/registration', formData).then(function (response) {
+                commit("CLEAR_CARS");
+              })["catch"](function (error) {
+                commit("SET_USER_REGISTRATION_ERRORS", error.response.data.errors);
+              });
+
+            case 3:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5);
+    }))();
   }
 });
 
@@ -2401,11 +2478,20 @@ __webpack_require__.r(__webpack_exports__);
   cars: function cars(state) {
     return state.cars;
   },
+  carValidationErrors: function carValidationErrors(state) {
+    return state.carValidationErrors;
+  },
   carBrands: function carBrands(state) {
     return state.carBrands;
   },
   carBrandModes: function carBrandModes(state) {
     return state.carBrandModes;
+  },
+  users: function users(state) {
+    return state.users;
+  },
+  userRegistrationErrors: function userRegistrationErrors(state) {
+    return state.userRegistrationErrors;
   }
 });
 
@@ -2455,12 +2541,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   SET_CAR_BRANDS: function SET_CAR_BRANDS(state, carBrands) {
     state.carBrands = carBrands;
   },
   SET_CAR_BRAND_MODES: function SET_CAR_BRAND_MODES(state, carBrandModes) {
     state.carBrandModes = carBrandModes;
+  },
+  PUSH_CAR: function PUSH_CAR(state, formData) {
+    state.cars.push(formData);
+  },
+  CLEAR_CARS: function CLEAR_CARS(state) {
+    state.cars = [];
+  },
+  SET_CAR_VALIDATION_ERRORS: function SET_CAR_VALIDATION_ERRORS(state, errors) {
+    state.carValidationErrors = errors;
+  },
+  SET_USER_REGISTRATION_ERRORS: function SET_USER_REGISTRATION_ERRORS(state, errors) {
+    state.userRegistrationErrors = errors;
   }
 });
 
@@ -2479,8 +2580,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   cars: [],
+  carValidationErrors: [],
   carBrands: [],
-  carBrandModes: []
+  carBrandModes: [],
+  users: [],
+  userRegistrationErrors: []
 });
 
 /***/ }),
@@ -32771,7 +32875,13 @@ var render = function() {
             },
             expression: "formData.brand"
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.errorMessage("brand.id")
+          ? _c("span", { staticClass: "mt-1 text-red-300 text-xs" }, [
+              _vm._v("* " + _vm._s(_vm.errorMessage("brand.id")))
+            ])
+          : _vm._e()
       ],
       1
     ),
@@ -32805,7 +32915,13 @@ var render = function() {
               _vm._v("Выберите марку автомобиля!")
             ])
           ]
-        )
+        ),
+        _vm._v(" "),
+        _vm.errorMessage("mode.id")
+          ? _c("span", { staticClass: "mt-1 text-red-300 text-xs" }, [
+              _vm._v("* " + _vm._s(_vm.errorMessage("mode.id")))
+            ])
+          : _vm._e()
       ],
       1
     ),
@@ -32818,7 +32934,23 @@ var render = function() {
           _vm._v("Год выпуска")
         ]),
         _vm._v(" "),
-        _c("t-input", { attrs: { placeholder: "Введите год" } })
+        _c("input-mask", {
+          staticClass: "input",
+          attrs: { placeholder: "Введите год", mask: "9999", maskChar: " " },
+          model: {
+            value: _vm.formData.year,
+            callback: function($$v) {
+              _vm.$set(_vm.formData, "year", $$v)
+            },
+            expression: "formData.year"
+          }
+        }),
+        _vm._v(" "),
+        _vm.errorMessage("year")
+          ? _c("span", { staticClass: "mt-1 text-red-300 text-xs" }, [
+              _vm._v("* " + _vm._s(_vm.errorMessage("year")))
+            ])
+          : _vm._e()
       ],
       1
     ),
@@ -32845,7 +32977,13 @@ var render = function() {
             },
             expression: "formData.number"
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.errorMessage("number")
+          ? _c("span", { staticClass: "mt-1 text-red-300 text-xs" }, [
+              _vm._v("* " + _vm._s(_vm.errorMessage("number")))
+            ])
+          : _vm._e()
       ],
       1
     ),
@@ -32872,7 +33010,13 @@ var render = function() {
             },
             expression: "formData.vin"
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.errorMessage("vin")
+          ? _c("span", { staticClass: "mt-1 text-red-300 text-xs" }, [
+              _vm._v("* " + _vm._s(_vm.errorMessage("vin")))
+            ])
+          : _vm._e()
       ],
       1
     ),
@@ -32881,7 +33025,8 @@ var render = function() {
       "button",
       {
         staticClass:
-          "font-medium text-lg clickable py-4 px-3 rounded-lg bg-green-600 hover:bg-green-700 focus:bg-green-700"
+          "font-medium text-lg clickable py-4 px-3 rounded-lg bg-green-600 hover:bg-green-700 focus:bg-green-700",
+        on: { click: _vm.save }
       },
       [_vm._v("Сохранить")]
     )
@@ -32923,7 +33068,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Зарегистрироваться")]
+        [_vm._v("Создать аккаунт")]
       )
     ]),
     _vm._v(" "),

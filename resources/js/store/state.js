@@ -1,5 +1,10 @@
 export default {
     cars: [],
+    carValidationErrors: [],
     carBrands: [],
-    carBrandModes: []
+    carBrandModes: [],
+
+
+    users: [],
+    userRegistrationErrors: []
 }

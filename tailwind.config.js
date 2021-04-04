@@ -24,6 +24,7 @@ module.exports = {
         1000: "#0D0F19",
       },
       gray: colors.gray,
+      red: colors.red,
     },
     extend: {
       cursor: ['disabled'],

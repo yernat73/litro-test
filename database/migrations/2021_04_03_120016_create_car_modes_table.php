@@ -15,7 +15,7 @@ class CreateCarModesTable extends Migration
     {
         Schema::create('car_modes', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->bigInteger('car_brand_id')->unsigned();
             $table->timestamps();
 

@@ -1,7 +1,7 @@
 <template>
   <ul class="flex text-gray-400">
     <li>  
-        <a class="clickable hover:text-white" href="#" @click="$modal.show('register')">Зарегистрироваться</a>
+        <a class="clickable hover:text-white" href="#" @click="$modal.show('register')">Создать аккаунт</a>
     </li>
     <li class="mx-2">/</li>
     <li>  

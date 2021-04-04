@@ -21,17 +21,6 @@ Route::get('/', function () {
 
 
 Route::get('/brands-seed', function () {
-    $content = json_decode(file_get_contents(asset("/cars_list.json")), true);
     
-    $collection = collect($content)->groupBy('Make');
-
-    foreach($collection as $brand => $cars){
-        $carbrand = CarBrand::create([
-            'name' => $brand
-        ]);
-        foreach(collect($cars)->unique('Model') as $car){
-            $carbrand->modes()->create(['name' => $car["Model"]]);
-        }
-    }
 
 });
